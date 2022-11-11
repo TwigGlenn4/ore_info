@@ -1,6 +1,6 @@
 # Ore Info
 
-The Ore Info mod creates a menu to view the depth and rarity of levels in which ores spawn.
+The Ore Info mod creates a menu to view the depth and rarity of groups in which ores spawn.
 Created by TwigGlenn4 
 
 ## Usage
@@ -14,7 +14,7 @@ If [Unified Inventory](https://forum.minetest.net/viewtopic.php?t=3933) is insta
 Any mod that adds ores to the game should be shown, and the ores are ordered alphabetically within each mod.
 
 ### Minetest
-This mod has been tested on the 5.0.0 update.
+This mod has been tested on minetest 5.0.0 and 5.6.1.
 It might work on other versions but I cannot guarantee compatibility.
 
 ## License
