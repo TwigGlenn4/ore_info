@@ -1,3 +1,6 @@
+[![ContentDB](https://content.minetest.net/packages/TwigGlenn4/ore_info/shields/title/)](https://content.minetest.net/packages/TwigGlenn4/ore_info/)
+[![ContentDB](https://content.minetest.net/packages/TwigGlenn4/ore_info/shields/downloads/)](https://content.minetest.net/packages/TwigGlenn4/ore_info/)
+
 # Ore Info
 
 The Ore Info mod creates a menu to view the depth and rarity of groups in which ores spawn.
