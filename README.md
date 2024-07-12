@@ -1,24 +1,27 @@
 [![ContentDB](https://content.minetest.net/packages/TwigGlenn4/ore_info/shields/title/)](https://content.minetest.net/packages/TwigGlenn4/ore_info/)
 [![ContentDB](https://content.minetest.net/packages/TwigGlenn4/ore_info/shields/downloads/)](https://content.minetest.net/packages/TwigGlenn4/ore_info/)
 
-# Ore Info
+# Ore Info [ore_info]
 
 The Ore Info mod creates a menu to view the depth and rarity of groups in which ores spawn.
 Created by TwigGlenn4 
 
 ## Usage
-Type ```/ore_info``` or click the button in [Unified Inventory](https://forum.minetest.net/viewtopic.php?t=3933) (if installed) to open the menu.
-Select an item from the list of the left to veiw it's stats.
+Type `/ore_info` or click the button in your inventory to open the menu.
+Select an item from the list on the left to view it's stats.
 
+![Diamond Ore Stats](screenshot.png)
 
 ## Compat
-If [Unified Inventory](https://forum.minetest.net/viewtopic.php?t=3933) is installed, there will be a button on the bottom to access this mod's menu.
+The following inventory mods are supported and have buttons to open Ore Info.
+* [Unified Inventory](https://content.minetest.net/packages/RealBadAngel/unified_inventory/)
+* [Simple Fast Inventory](https://content.minetest.net/packages/rubenwardy/sfinv/) (This is the default inventory in Minetest Game)
+* [Inventory Plus](https://content.minetest.net/packages/TenPlus1/inventory_plus/)
 
-Any mod that adds ores to the game should be shown, and the ores are ordered alphabetically within each mod.
+Since ore_info scans Minetest's registered ores, it should be compatible with most mods.
 
 ### Minetest
-This mod has been tested on minetest 5.0.0 and 5.6.1.
-It might work on other versions but I cannot guarantee compatibility.
+v1.1.0 has been developed and tested on Minetest 5.8.0
 
 ## License
 
