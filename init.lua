@@ -60,7 +60,7 @@ function ore_info.formspec.get_formspec(page)
   -- build a textlist for registered ores.
   local textlist_items = ""
   for _,ore in ipairs(ore_info.ore_types) do
-    local ore_desc = minetest.registered_nodes[ore].description
+    local ore_desc = ore_info.formatted_name(minetest.registered_nodes[ore].description)
     textlist_items = textlist_items..ore_desc..","
   end
   textlist_items = textlist_items:sub(1, -2)
@@ -79,8 +79,18 @@ function ore_info.formspec.get_formspec(page)
   else -- Only show content if ore is selceted
 
     local ore_name = ore_info.ore_types[page]
-    local ore_desc = minetest.registered_nodes[ore_name].description
-    page_info = "image["..x_offset..",0.5;1,1;"..minetest.registered_nodes[ore_name].tiles[1].."]"..
+    local ore_desc = ore_info.formatted_name(minetest.registered_nodes[ore_name].description)
+    local image = minetest.registered_nodes[ore_name].tiles[1]
+
+    if type(image) ~= "string" then
+      image = minetest.registered_nodes[ore_name].tiles[1].name
+
+      if type(image) ~= "string" then
+        image = "unknown_item.png"
+      end
+    end
+
+    page_info = "image["..x_offset..",0.5;1,1;"..image.."]"..
         "style_type[label;font_size=*1.3]label["..x_offset+1.25 ..",0.75;"..minetest.formspec_escape(ore_desc).."]"..
         "style_type[label;font=mono;font_size=*1]label["..x_offset+1.25 ..",1.25;"..minetest.formspec_escape(ore_name).."]"
 
@@ -207,6 +217,16 @@ function ore_info.list_ore_properties()
       print("    "..ore_info.printable(v))
     end
   end
+end
+
+function ore_info.formatted_name(value)
+  local pos = string.find(value, "\n")
+
+  if pos then
+    value = string.sub(value, 1, pos - 1)
+  end
+
+  return value
 end
 
 
