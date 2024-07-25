@@ -7,23 +7,23 @@ The Ore Info mod creates a menu to view the depth and rarity of groups in which 
 Created by TwigGlenn4 
 
 ## Usage
-Type `/ore_info` or click the button in your inventory to open the menu.
+Type `/ore_info` or click the ![Ore Info](textures/ore_info_button.png) button in your inventory to open the menu.
 Select an item from the list on the left to view it's stats.
 
 ![Diamond Ore Stats](screenshot.png)
 
-## Compat
+## Compatibility
 The following inventory mods are supported and have buttons to open Ore Info.
 * [Unified Inventory](https://content.minetest.net/packages/RealBadAngel/unified_inventory/)
 * [Simple Fast Inventory](https://content.minetest.net/packages/rubenwardy/sfinv/) (This is the default inventory in Minetest Game)
 * [Inventory Plus](https://content.minetest.net/packages/TenPlus1/inventory_plus/)
 
-Since ore_info scans Minetest's registered ores, it should be compatible with most mods.
+Since Ore Info scans Minetest's registered ores, it should be compatible with most mods.
 
 ### Minetest
-v1.1.0 has been developed and tested on Minetest 5.8.0
+v1.2.0 has been developed and tested on Minetest 5.8.0
 
-## License
+## Credits
 
-- Ore Info is licensed with the MIT license, see
-  [`LICENSE.md`](LICENSE.md) for details.
+* Ore Info is licensed with the MIT license, see [`LICENSE.md`](LICENSE.md) for details.
+* Thanks to [adikalon](https://github.com/adikalon) for adding Extended Tooltips support and fixing a crash when previewing animated nodes.
