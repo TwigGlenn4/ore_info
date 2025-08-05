@@ -1,5 +1,5 @@
-[![ContentDB](https://content.minetest.net/packages/TwigGlenn4/ore_info/shields/title/)](https://content.minetest.net/packages/TwigGlenn4/ore_info/)
-[![ContentDB](https://content.minetest.net/packages/TwigGlenn4/ore_info/shields/downloads/)](https://content.minetest.net/packages/TwigGlenn4/ore_info/)
+[![ContentDB](https://content.luanti.org/packages/TwigGlenn4/ore_info/shields/title/)](https://content.luanti.org/packages/TwigGlenn4/ore_info/)
+[![ContentDB](https://content.luanti.org/packages/TwigGlenn4/ore_info/shields/downloads/)](https://content.luanti.org/packages/TwigGlenn4/ore_info/)
 
 # Ore Info [ore_info]
 
@@ -14,14 +14,14 @@ Select an item from the list on the left to view it's stats.
 
 ## Compatibility
 The following inventory mods are supported and have buttons to open Ore Info.
-* [Unified Inventory](https://content.minetest.net/packages/RealBadAngel/unified_inventory/)
-* [Simple Fast Inventory](https://content.minetest.net/packages/rubenwardy/sfinv/) (This is the default inventory in Minetest Game)
-* [Inventory Plus](https://content.minetest.net/packages/TenPlus1/inventory_plus/)
+* [Unified Inventory](https://content.luanti.org/packages/RealBadAngel/unified_inventory/)
+* [sfinv (Simple Fast Inventory)](https://content.luanti.org/packages/rubenwardy/sfinv/) (This is the default inventory in Minetest Game)
+* [Inventory Plus](https://content.luanti.org/packages/TenPlus1/inventory_plus/)
 
-Since Ore Info scans Minetest's registered ores, it should be compatible with most mods.
+Since Ore Info scans Luanti's registered ores, it should be compatible with most mods.
 
-### Minetest
-v1.2.0 has been developed and tested on Minetest 5.8.0
+### Luanti
+Ore Info v1.2.1 has been developed and tested on Luanti 5.12.0
 
 ## Credits
 

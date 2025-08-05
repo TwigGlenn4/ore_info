@@ -1,10 +1,10 @@
--- Ore Info [ore_info] Minetest mod
+-- Ore Info [ore_info] Luanti mod
 -- TwigGlenn4
 
 
 ore_info = {}
-local modname = minetest.get_current_modname()
-ore_info.path = minetest.get_modpath(modname)
+local modname = core.get_current_modname()
+ore_info.path = core.get_modpath(modname)
 local function runfile(file)
     dofile(ore_info.path .. "/" .. file .. ".lua")
 end
@@ -47,7 +47,7 @@ function ore_info.formspec.get_formspec_ore_chunk(X, Y, ore_def)
   elseif type(ore_def.clust_scarcity) ~= "nil" and type(ore_def.clust_size) ~= "nil" then
     rarity = string.format(": %2.2f%%", (ore_def.clust_size/ore_def.clust_scarcity)*100) -- Relative percentage of other clusters (ex. gravel)
   end
-  local label_content = minetest.formspec_escape(string.format("[%6d, %6d]%-8s (%s)", ore_def.y_min, ore_def.y_max, rarity, ore_def.ore_type))
+  local label_content = core.formspec_escape(string.format("[%6d, %6d]%-8s (%s)", ore_def.y_min, ore_def.y_max, rarity, ore_def.ore_type))
   -- print(ore_info.printable(ore_def))
   return "label["..X..","..Y..";"..label_content.."]"
 end
@@ -60,30 +60,30 @@ function ore_info.formspec.get_formspec(page)
   -- build a textlist for registered ores.
   local textlist_items = ""
   for _,ore in ipairs(ore_info.ore_types) do
-    local ore_desc = ore_info.formatted_name(minetest.registered_nodes[ore].description)
+    local ore_desc = ore_info.formatted_name(core.registered_nodes[ore].description)
     textlist_items = textlist_items..ore_desc..","
   end
   textlist_items = textlist_items:sub(1, -2)
 
   local page_info = ""
   if page == 0 then -- main page explains the meaning of the data
-    page_info = "style_type[label;font_size=*1.3]label["..x_offset..",0.75;"..minetest.formspec_escape("How it works").."]"..
-        "style_type[label;font=mono]label["..x_offset..",1.25;"..minetest.formspec_escape("[y_min, y_max]: rarity%  (shape)").."]"..
-        "style_type[label;font=normal;font_size=*1]label["..x_offset..",2.0;"..minetest.formspec_escape("Multiple ore definitions allow for the rarity to vary.").."]"..
-        "label["..x_offset..",2.5;"..minetest.formspec_escape("y_min is the lower bound of the ore defintion.").."]"..
-        "label["..x_offset..",3.0;"..minetest.formspec_escape("y_max is the upper bound of the ore defintion.").."]"..
-        "label["..x_offset..",3.5;"..minetest.formspec_escape("shape is the pattern of ore generation.").."]"..
-        "label["..x_offset..",4.0;"..minetest.formspec_escape("rarity is the chance for each node in the given range.").."]"..
-        "style_type[label;font=mono]label["..x_offset..",4.5;"..minetest.formspec_escape("(clust_num_ores/clust_scarcity)*100%").."]"
+    page_info = "style_type[label;font_size=*1.3]label["..x_offset..",0.75;"..core.formspec_escape("How it works").."]"..
+        "style_type[label;font=mono]label["..x_offset..",1.25;"..core.formspec_escape("[y_min, y_max]: rarity%  (shape)").."]"..
+        "style_type[label;font=normal;font_size=*1]label["..x_offset..",2.0;"..core.formspec_escape("Multiple ore definitions allow for the rarity to vary.").."]"..
+        "label["..x_offset..",2.5;"..core.formspec_escape("y_min is the lower bound of the ore defintion.").."]"..
+        "label["..x_offset..",3.0;"..core.formspec_escape("y_max is the upper bound of the ore defintion.").."]"..
+        "label["..x_offset..",3.5;"..core.formspec_escape("shape is the pattern of ore generation.").."]"..
+        "label["..x_offset..",4.0;"..core.formspec_escape("rarity is the chance for each node in the given range.").."]"..
+        "style_type[label;font=mono]label["..x_offset..",4.5;"..core.formspec_escape("(clust_num_ores/clust_scarcity)*100%").."]"
 
   else -- Only show content if ore is selceted
 
     local ore_name = ore_info.ore_types[page]
-    local ore_desc = ore_info.formatted_name(minetest.registered_nodes[ore_name].description)
-    local image = minetest.registered_nodes[ore_name].tiles[1]
+    local ore_desc = ore_info.formatted_name(core.registered_nodes[ore_name].description)
+    local image = core.registered_nodes[ore_name].tiles[1]
 
     if type(image) ~= "string" then
-      image = minetest.registered_nodes[ore_name].tiles[1].name
+      image = core.registered_nodes[ore_name].tiles[1].name
 
       if type(image) ~= "string" then
         image = "unknown_item.png"
@@ -91,8 +91,8 @@ function ore_info.formspec.get_formspec(page)
     end
 
     page_info = "image["..x_offset..",0.5;1,1;"..image.."]"..
-        "style_type[label;font_size=*1.3]label["..x_offset+1.25 ..",0.75;"..minetest.formspec_escape(ore_desc).."]"..
-        "style_type[label;font=mono;font_size=*1]label["..x_offset+1.25 ..",1.25;"..minetest.formspec_escape(ore_name).."]"
+        "style_type[label;font_size=*1.3]label["..x_offset+1.25 ..",0.75;"..core.formspec_escape(ore_desc).."]"..
+        "style_type[label;font=mono;font_size=*1]label["..x_offset+1.25 ..",1.25;"..core.formspec_escape(ore_name).."]"
 
     -- Create a list of ore definitions for the selected ore
     local ore_defs = {}
@@ -132,7 +132,7 @@ function ore_info.formspec.get_formspec(page)
 
     "image_button_exit[0.5,0.5;1,1;clear.png;ore_info_exit;]",
     "style_type[button;font_size=*1.3]",
-    "button[1.75,0.5;3.75,1;main_page;"..minetest.formspec_escape(ore_info.page_title).."]",
+    "button[1.75,0.5;3.75,1;main_page;"..core.formspec_escape(ore_info.page_title).."]",
 
     "textlist[0.5,1.75;5,6.25;ore_list;"..textlist_items.."]",
     page_info
@@ -154,11 +154,11 @@ function ore_info.formspec.show_to(player, page)
     end
   end
   -- print("page# = "..page)
-  minetest.show_formspec(player, ore_info.formspec.id, ore_info.formspec.get_formspec(page))
+  core.show_formspec(player, ore_info.formspec.id, ore_info.formspec.get_formspec(page))
 end
 
 -- Register a command to show the formspec
-minetest.register_chatcommand("ore_info", {
+core.register_chatcommand("ore_info", {
   func = function(player)
 
     ore_info.formspec.show_to(player)
@@ -166,7 +166,7 @@ minetest.register_chatcommand("ore_info", {
 })
 
 -- When a player selects a ore from the list, show the page for that ore.
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+core.register_on_player_receive_fields(function(player, formname, fields)
   -- Only show if the previous formspec was from this mod.
   if formname ~= ore_info.formspec.id then
     return
@@ -180,7 +180,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
   if fields.ore_list then
     ore_info.find_registered_ores()
     local pname = player:get_player_name()
-    -- minetest.chat_send_all(pname .. " selected " .. fields.ore_list)
+    -- core.chat_send_all(pname .. " selected " .. fields.ore_list)
     ore_info.formspec.show_to(pname, fields.ore_list)
   end
 end)

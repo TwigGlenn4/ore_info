@@ -1,4 +1,4 @@
--- Ore Info [ore_info] Minetest mod
+-- Ore Info [ore_info] Luanti mod
 -- TwigGlenn4
 
 
@@ -6,7 +6,7 @@
 -- unified_inventory --
 -----------------------
 
-if minetest.global_exists("unified_inventory") then
+if core.global_exists("unified_inventory") then
   -- print("[ore_info]: Enabling support for unified_inventory...")
   unified_inventory.register_page(ore_info.formspec.id, {
 		get_formspec = function(player)
@@ -35,7 +35,7 @@ if minetest.global_exists("unified_inventory") then
 		--   Configuration line `unified_inventory_lite = true`
 		--   Player does not have the privilege `ui_full`
 	})
-  minetest.register_on_player_receive_fields(function(player, formname, fields)
+  core.register_on_player_receive_fields(function(player, formname, fields)
 		if fields.ore_info_exit then --return to unified_inventory page
 			unified_inventory.set_inventory_formspec(player, "craft")
 			return true
@@ -49,7 +49,7 @@ end
 -- sfinv --
 -----------
 
-if minetest.global_exists("sfinv") and sfinv.enabled then
+if core.global_exists("sfinv") and sfinv.enabled then
   -- print("[ore_info]: Enabling support for sfinv...")
   local orig_get = sfinv.pages["sfinv:crafting"].get
 	sfinv.override_page("sfinv:crafting", {
@@ -60,7 +60,7 @@ if minetest.global_exists("sfinv") and sfinv.enabled then
 		end
 	})
   --show the form when the button is pressed and hide it when done
-	minetest.register_on_player_receive_fields(function(player, formname, fields)
+	core.register_on_player_receive_fields(function(player, formname, fields)
 		if fields.ore_info_gui then --main page
       ore_info.find_registered_ores()
 			ore_info.formspec.show_to(player:get_player_name())
@@ -78,15 +78,15 @@ end
 -- inventory_plus --
 --------------------
 
-if minetest.global_exists("inventory_plus") then
+if core.global_exists("inventory_plus") then
   -- print("[ore_info]: Enabling support for inventory_plus...")
-  minetest.register_on_joinplayer(function(player)
+  core.register_on_joinplayer(function(player)
 		inventory_plus.register_button(player, "ore_info_gui", "Ore Info")
 	end)
 
   --show the form when the button is pressed and hide it when done
   local gui_player_formspecs = {}
-  minetest.register_on_player_receive_fields(function(player, formname, fields)
+  core.register_on_player_receive_fields(function(player, formname, fields)
     local name = player:get_player_name()
     if fields.ore_info_gui then --main page
       gui_player_formspecs[name] = player:get_inventory_formspec()
