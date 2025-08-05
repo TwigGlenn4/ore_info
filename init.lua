@@ -15,6 +15,17 @@ ore_info.page_title = "Ore Info"
 ore_info.formspec.id = "ore_info:main"
 
 
+function ore_info.string_from_tbl_or_str(input)
+  if type(input) == "table" then
+    return table.concat(input, ", ")
+  elseif type(input) == "string" then
+    return input
+  else
+    return tostring(input)
+  end
+end
+
+
 -- Find registered ores from core.registered_ores and add them to ore_info.ores and ore_info.ore_types. Sorts ore_info.ore_types by ore name, which keeps mods together.
 function ore_info.find_registered_ores()
   -- Check if ores have already been registered, If they are registered twice, there will be duplicates.
@@ -46,8 +57,20 @@ function ore_info.formspec.get_formspec_ore_chunk(X, Y, ore_def)
     rarity = string.format(": %2.2f%%", (ore_def.clust_num_ores/ore_def.clust_scarcity)*100) -- Relative percentage of ores
   elseif type(ore_def.clust_scarcity) ~= "nil" and type(ore_def.clust_size) ~= "nil" then
     rarity = string.format(": %2.2f%%", (ore_def.clust_size/ore_def.clust_scarcity)*100) -- Relative percentage of other clusters (ex. gravel)
+  elseif ore_def.ore_type == "stratum" and type(ore_def.stratum_thickness) ~= "nil" then
+    rarity = string.format(": thickness %2d", ore_def.stratum_thickness) -- thickness of stratum
   end
-  local label_content = core.formspec_escape(string.format("[%6d, %6d]%-8s (%s)", ore_def.y_min, ore_def.y_max, rarity, ore_def.ore_type))
+	
+  -- handle missing parameters
+	local y_max = ore_def.y_max
+	if y_max == nil then y_max = "max" end
+	local y_min = ore_def.y_min
+	if y_min == nil then y_min = "min" end
+  local wherein = "none"
+  if ore_def.wherein ~= nil then wherein = ore_info.string_from_tbl_or_str(ore_def.wherein) end
+
+  -- make readable format of ore_def
+  local label_content = core.formspec_escape(string.format("[%6s, %6s]%-8s (%s) in %s", y_min, y_max, rarity, ore_def.ore_type, wherein))
   -- print(ore_info.printable(ore_def))
   return "label["..X..","..Y..";"..label_content.."]"
 end
@@ -96,10 +119,18 @@ function ore_info.formspec.get_formspec(page)
 
     -- Create a list of ore definitions for the selected ore
     local ore_defs = {}
+    local ore_defs_missing_ymax = {} -- track defs without y_max parameter
+    local num_missing_ymax = 0
     for _,ore_def in pairs(ore_info.ores) do
       if ore_def.ore == ore_name then
         -- print(ore_def.ore)
-        ore_defs[ore_def.y_max] = ore_def
+        if ore_def.y_max == nil then -- store defs misssing y_max seperately because y_max is the sorted value
+          num_missing_ymax = num_missing_ymax + 1
+          ore_defs_missing_ymax[num_missing_ymax] = ore_def
+          -- print("[ore_info]: missing y_max for def of "..ore_def.ore)
+        else
+          ore_defs[ore_def.y_max] = ore_def
+				end
       end
     end
 
@@ -108,14 +139,23 @@ function ore_info.formspec.get_formspec(page)
     for _,n in pairs(ore_defs) do table.insert(tbl, n.y_max) end
     table.sort(tbl, function(a, b) return a > b end)
     ore_defs = {}
+		local ore_table_index = 0
     for i,n in ipairs(tbl) do
       for _,ore_def in pairs(ore_info.ores) do
         if ore_def.y_max == n and ore_def.ore == ore_name then
           ore_defs[i] = ore_def
         end
       end
-      -- print(i..", "..n..", "..ore_defs[i].ore) -- Print the index, ore y_max, and ore name
+      -- print("[ore_info]: "..ore_defs[i].ore..", idx="..i..", y_max="..n..", in=["..ore_info.string_from_tbl_or_str(ore_defs[i].wherein).."]") -- Print ore name, index, and ore y_max
+			ore_table_index = i
     end
+
+		-- Add oredefs that are missing y_max into the oredef list at the end.
+		for i = 1, num_missing_ymax do
+			ore_defs[ore_table_index + i] = ore_defs_missing_ymax[i]
+      -- print("[ore_info]: missing y_max "..ore_defs[ore_table_index + i].ore..", idx="..ore_table_index + i..", in=["..ore_info.string_from_tbl_or_str(ore_defs[ore_table_index + i].wherein).."]") -- Print ore name, index, and ore y_max
+		end
+		
 
     -- Get a formspec chunk label for each ore def and move it further down the page
     local y=2

@@ -3,7 +3,7 @@
 
 # Ore Info [ore_info]
 
-The Ore Info mod creates a menu to view the depth and rarity of groups in which ores spawn.
+The Ore Info mod creates a menu to view the depth and rarity of groups in which ores generate.
 Created by TwigGlenn4 
 
 ## Usage

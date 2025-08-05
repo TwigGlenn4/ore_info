@@ -11,12 +11,16 @@
 
 # v1.2.0
 ### Additions
-* Added support for Extended Tooltips: Base `tt_base`, Everness `everness`, Etheral NG `ethereal`, Nether (PilzAdam) `nether`, and more  - Implemented by [adikalon](https://github.com/adikalon)
+* Added support for Extended Tooltips: Base `tt_base`, Everness `everness`, Etheral NG `ethereal`, Nether (PilzAdam) `nether`, and more - Implemented by [adikalon](https://github.com/adikalon)
 ### Fixes
 * No longer crashes when previewing animated nodes - Fixed by [adikalon](https://github.com/adikalon)
 * There is not enough data in the Tile Animation Defintion to build an animated image in the menu, so the full texture is just squished.
 
-# v1.2.1
+# v1.3.0
+### Additions
+* Show which nodes an ore generates in. 
+* Show thicknesss of stratum type.
 ### Fixes
 * Update references to Minetest to now say Luanti.
 * Update `minetest` code namespace to `core`.
+* Avoid crashing if ore definition is missing `y_min`, `y_max`, or `wherein` parameters.
