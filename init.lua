@@ -17,9 +17,18 @@ ore_info.formspec.id = "ore_info:main"
 
 function ore_info.string_from_tbl_or_str(input)
   if type(input) == "table" then
-    return table.concat(input, ", ")
+    local result = ""
+    local first_node = true
+    for _, node in ipairs(input) do
+      if not first_node then
+        result = result..", "
+      end
+      result = result..ore_info.formatted_name(core.registered_nodes[node].description)
+      first_node = false
+    end
+    return result
   elseif type(input) == "string" then
-    return input
+    return ore_info.formatted_name(core.registered_nodes[input].description)
   else
     return tostring(input)
   end
@@ -91,13 +100,14 @@ function ore_info.formspec.get_formspec(page)
   local page_info = ""
   if page == 0 then -- main page explains the meaning of the data
     page_info = "style_type[label;font_size=*1.3]label["..x_offset..",0.75;"..core.formspec_escape("How it works").."]"..
-        "style_type[label;font=mono]label["..x_offset..",1.25;"..core.formspec_escape("[y_min, y_max]: rarity%  (shape)").."]"..
+        "style_type[label;font=mono]label["..x_offset..",1.25;"..core.formspec_escape("[y_min, y_max]: rarity%  (shape) in replacables").."]"..
         "style_type[label;font=normal;font_size=*1]label["..x_offset..",2.0;"..core.formspec_escape("Multiple ore definitions allow for the rarity to vary.").."]"..
         "label["..x_offset..",2.5;"..core.formspec_escape("y_min is the lower bound of the ore defintion.").."]"..
         "label["..x_offset..",3.0;"..core.formspec_escape("y_max is the upper bound of the ore defintion.").."]"..
         "label["..x_offset..",3.5;"..core.formspec_escape("shape is the pattern of ore generation.").."]"..
         "label["..x_offset..",4.0;"..core.formspec_escape("rarity is the chance for each node in the given range.").."]"..
-        "style_type[label;font=mono]label["..x_offset..",4.5;"..core.formspec_escape("(clust_num_ores/clust_scarcity)*100%").."]"
+        "label["..x_offset..",4.5;"..core.formspec_escape("replacables are the nodes that the ore can generate in.").."]"..
+        "style_type[label;font=mono]label["..x_offset..",5.0;"..core.formspec_escape("rarity = (clust_num_ores/clust_scarcity)*100%").."]"
 
   else -- Only show content if ore is selceted
 
