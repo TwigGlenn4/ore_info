@@ -50,27 +50,41 @@ end
 -----------
 
 if core.global_exists("sfinv") and sfinv.enabled then
-  -- print("[ore_info]: Enabling support for sfinv...")
-  local orig_get = sfinv.pages["sfinv:crafting"].get
-	sfinv.override_page("sfinv:crafting", {
-		get = function(self, player, context)
-			local fs = orig_get(self, player, context)
-			return fs .. "image_button[0,1;1,1;ore_info_button.png;ore_info_gui;]" ..
-				"tooltip[ore_info;Ore Info]"
-		end
-	})
-  --show the form when the button is pressed and hide it when done
-	core.register_on_player_receive_fields(function(player, formname, fields)
-		if fields.ore_info_gui then --main page
-      ore_info.find_registered_ores()
+	if core.global_exists("sfinv_buttons") then
+		local button_action = function(player)
+			ore_info.find_registered_ores()
 			ore_info.formspec.show_to(player:get_player_name())
-			return true
-		elseif fields.ore_info_exit then --return to sfinv page
-			sfinv.set_page(player, "sfinv:crafting")
-			return true
 		end
-		return false
-	end)
+
+		sfinv_buttons.register_button("ore_info", {
+			image = "ore_info_button.png",
+			tooltip = "Show ore depth and rarity",
+			title = "Ore Info",
+			action = button_action,
+		})
+	else
+	-- print("[ore_info]: Enabling support for sfinv...")
+		local orig_get = sfinv.pages["sfinv:crafting"].get
+		sfinv.override_page("sfinv:crafting", {
+			get = function(self, player, context)
+				local fs = orig_get(self, player, context)
+				return fs .. "image_button[0,1;1,1;ore_info_button.png;ore_info_gui;]" ..
+					"tooltip[ore_info;Ore Info]"
+			end
+		})
+	--show the form when the button is pressed and hide it when done
+		core.register_on_player_receive_fields(function(player, formname, fields)
+			if fields.ore_info_gui then --main page
+				ore_info.find_registered_ores()
+				ore_info.formspec.show_to(player:get_player_name())
+				return true
+			elseif fields.ore_info_exit then --return to sfinv page
+				sfinv.set_page(player, "sfinv:crafting")
+				return true
+			end
+			return false
+		end)
+	end
 end
 
 
