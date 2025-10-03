@@ -24,3 +24,7 @@
 * Update references to Minetest to now say Luanti.
 * Update `minetest` code namespace to `core`.
 * Avoid crashing if ore definition is missing `y_min`, `y_max`, or `wherein` parameters.
+
+# v1.3.1
+### Additions
+* Add a button in Simple Fast Inventory Buttons `sfinv_buttons` - Implemented by [adikalon](https://github.com/adikalon)

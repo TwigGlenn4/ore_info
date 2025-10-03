@@ -21,7 +21,7 @@ The following inventory mods are supported and have buttons to open Ore Info.
 Since Ore Info scans Luanti's registered ores, it should be compatible with most mods.
 
 ### Luanti
-Ore Info v1.3.0 has been developed and tested on Luanti 5.12.0
+Ore Info v1.3.1 has been developed and tested on Luanti 5.13.0
 
 ## Credits
 
